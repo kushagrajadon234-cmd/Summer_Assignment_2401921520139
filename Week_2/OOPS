@@ -1,0 +1,52 @@
+#include <iostream>
+
+namespace music {
+
+    class Playable {
+    public:
+        virtual void play() = 0;
+        virtual ~Playable() {}
+    };
+
+    namespace string_inst {
+        class Veena : public Playable {
+        public:
+            void play() override {
+                std::cout << "Veena is playing..." << std::endl;
+            }
+        };
+    }
+
+    namespace wind {
+        class Saxophone : public Playable {
+        public:
+            void play() override {
+                std::cout << "Saxophone is playing..." << std::endl;
+            }
+        };
+    }
+}
+
+namespace live {
+    void runTest() {
+        music::string_inst::Veena veena;
+        veena.play();
+
+        music::wind::Saxophone saxophone;
+        saxophone.play();
+
+        music::Playable* p1 = new music::string_inst::Veena();
+        p1->play();
+
+        music::Playable* p2 = new music::wind::Saxophone();
+        p2->play();
+
+        delete p1;
+        delete p2;
+    }
+}
+
+int main() {
+    live::runTest();
+    return 0;
+}
