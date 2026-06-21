@@ -1,0 +1,76 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+abstract class Compartment {
+public:
+    virtual string notice() = 0;
+    virtual ~Compartment() {}
+};
+
+class FirstClass : public Compartment {
+public:
+    string notice() override {
+        return "First Class: Comfortable journey for premium passengers.";
+    }
+};
+
+class Ladies : public Compartment {
+public:
+    string notice() override {
+        return "Ladies Compartment: Reserved only for female passengers.";
+    }
+};
+
+class General : public Compartment {
+public:
+    string notice() override {
+        return "General Compartment: Open for all passengers.";
+    }
+};
+
+class Luggage : public Compartment {
+public:
+    string notice() override {
+        return "Luggage Compartment: Reserved for luggage and goods.";
+    }
+};
+
+int main() {
+    srand(time(0));
+
+    Compartment* compartments[10];
+
+    for (int i = 0; i < 10; i++) {
+        int choice = rand() % 4 + 1;
+
+        switch (choice) {
+            case 1:
+                compartments[i] = new FirstClass();
+                break;
+            case 2:
+                compartments[i] = new Ladies();
+                break;
+            case 3:
+                compartments[i] = new General();
+                break;
+            case 4:
+                compartments[i] = new Luggage();
+                break;
+        }
+    }
+
+    cout << "Notice Messages:\n\n";
+
+    for (int i = 0; i < 10; i++) {
+        cout << "Compartment " << i + 1 << ": "
+             << compartments[i]->notice() << endl;
+    }
+
+    for (int i = 0; i < 10; i++) {
+        delete compartments[i];
+    }
+
+    return 0;
+}
